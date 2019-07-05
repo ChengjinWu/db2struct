@@ -1,5 +1,4 @@
-# db2struct [![Build Status](https://travis-ci.org/Shelnutt2/db2struct.svg?branch=master)](https://travis-ci.org/Shelnutt2/db2struct) [![Coverage Status](https://coveralls.io/repos/github/Shelnutt2/db2struct/badge.svg?branch=1-add-coveralls-support)](https://coveralls.io/github/Shelnutt2/db2struct?branch=1-add-coveralls-support) [![GoDoc](https://godoc.org/github.com/Shelnutt2/db2struct?status.svg)](https://godoc.org/github.com/Shelnutt2/db2struct)
-
+# db2struct 
 The db2struct package produces a usable golang struct from a given database table for use in a .go file.
 
 By reading details from the database about the column structure, db2struct generates a go compatible struct type
@@ -16,7 +15,7 @@ Db2Struct is based/inspired by the work of ChimeraCoder's gojson package
 ## Usage
 
 ```BASH
-go get github.com/Shelnutt2/db2struct/db2struct
+go get github.com/ChengjinWu/db2struct/db2struct
 db2struct --host localhost -d test -t test_table --package myGoPackage --struct testTable -p --user testUser
 ```
 
