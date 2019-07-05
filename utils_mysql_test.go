@@ -15,16 +15,16 @@ const testMariadbDatabase = "test"
 
 func TestGetColumnsFromMysqlTable(t *testing.T) {
 	var testTable = "all_data_types"
-	columMap, err := GetColumnsFromMysqlTable(testMariadbUsername, testMariadbPassword, testMariadbHost, testMariadbPort, testMariadbDatabase, testTable)
+	gormStructs, err := GetColumnsFromMysqlTable(testMariadbUsername, testMariadbPassword, testMariadbHost, testMariadbPort, testMariadbDatabase, testTable)
 	Convey("Should be able to connect to test database and create columnMap", t, func() {
 		So(err, ShouldBeNil)
-		So(columMap, ShouldNotBeNil)
-		So(*columMap, ShouldNotBeEmpty)
+		So(gormStructs, ShouldNotBeNil)
+		So(gormStructs, ShouldNotBeEmpty)
 	})
 
-	columMap, err = GetColumnsFromMysqlTable(testMariadbUsername, testMariadbPassword, "doesnotexists", testMariadbPort, testMariadbDatabase, testTable)
+	gormStructs, err = GetColumnsFromMysqlTable(testMariadbUsername, testMariadbPassword, "doesnotexists", testMariadbPort, testMariadbDatabase, testTable)
 	Convey("Should get an error connecting to test database", t, func() {
 		So(err, ShouldNotBeNil)
-		So(columMap, ShouldBeNil)
+		So(gormStructs, ShouldBeNil)
 	})
 }
