@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/Shelnutt2/db2struct"
+	"db2struct"
 	goopt "github.com/droundy/goopt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/howeyc/gopass"
@@ -80,7 +80,7 @@ func main() {
 		return
 	}
 
-	columnDataTypes, err := db2struct.GetColumnsFromMysqlTable(*mariadbUser, *mariadbPassword, mariadbHost, *mariadbPort, *mariadbDatabase, *mariadbTable)
+	gormStructs, err := db2struct.GetColumnsFromMysqlTable(*mariadbUser, *mariadbPassword, mariadbHost, *mariadbPort, *mariadbDatabase, *mariadbTable)
 
 	if err != nil {
 		fmt.Println("Error in selecting column data information from mysql information schema")
@@ -95,16 +95,17 @@ func main() {
 	if packageName == nil || *packageName == "" {
 		*packageName = "newpackage"
 	}
-	// Generate struct string based on columnDataTypes
-	struc, err := db2struct.Generate(*columnDataTypes, *mariadbTable, *structName, *packageName, *jsonAnnotation, *gormAnnotation, *gureguTypes)
+	for _, gormStruct := range gormStructs {
+		// Generate struct string based on gormStructs
+		struc, err := db2struct.Generate(gormStruct, *mariadbTable, *structName, *packageName, *jsonAnnotation, *gormAnnotation, *gureguTypes)
 
-	if err != nil {
-		fmt.Println("Error in creating struct from json: " + err.Error())
-		return
+		if err != nil {
+			fmt.Println("Error in creating struct from json: " + err.Error())
+			return
+		}
+
+		fmt.Println(string(struc))
 	}
-
-	fmt.Println(string(struc))
-
 }
 
 func getMariadbPassword(password string) error {
