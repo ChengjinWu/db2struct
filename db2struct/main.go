@@ -75,29 +75,20 @@ func main() {
 		return
 	}
 
-	if mariadbTable == nil || *mariadbTable == "" {
-		fmt.Println("Table can not be null")
-		return
-	}
-
-	gormStructs, err := db2struct.GetColumnsFromMysqlTable(*mariadbUser, *mariadbPassword, mariadbHost, *mariadbPort, *mariadbDatabase, *mariadbTable)
+	gormStructs, err := db2struct.GetColumnsFromMysqlTable(*mariadbUser, *mariadbPassword, mariadbHost, *mariadbPort, *mariadbDatabase)
 
 	if err != nil {
 		fmt.Println("Error in selecting column data information from mysql information schema")
 		return
 	}
 
-	// If structName is not set we need to default it
-	if structName == nil || *structName == "" {
-		*structName = "newstruct"
-	}
 	// If packageName is not set we need to default it
 	if packageName == nil || *packageName == "" {
 		*packageName = "newpackage"
 	}
 	for _, gormStruct := range gormStructs {
 		// Generate struct string based on gormStructs
-		struc, err := db2struct.Generate(gormStruct, *mariadbTable, *structName, *packageName, *jsonAnnotation, *gormAnnotation, *gureguTypes)
+		struc, err := db2struct.Generate(gormStruct, *packageName, *jsonAnnotation, *gormAnnotation, *gureguTypes)
 
 		if err != nil {
 			fmt.Println("Error in creating struct from json: " + err.Error())

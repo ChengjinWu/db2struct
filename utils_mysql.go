@@ -9,7 +9,7 @@ import (
 )
 
 // GetColumnsFromMysqlTable Select column details from information schema and return map of map
-func GetColumnsFromMysqlTable(mariadbUser string, mariadbPassword string, mariadbHost string, mariadbPort int, mariadbDatabase string, mariadbTable string) ([]*GormStruct, error) {
+func GetColumnsFromMysqlTable(mariadbUser string, mariadbPassword string, mariadbHost string, mariadbPort int, mariadbDatabase string) ([]*GormStruct, error) {
 
 	var err error
 	var db *sql.DB

@@ -94,9 +94,10 @@ var Debug = false
 
 // Generate Given a Column map with datatypes and a name structName,
 // attempts to generate a struct definition
-func Generate(gormStructs *GormStruct, tableName string, structName string, pkgName string, jsonAnnotation bool, gormAnnotation bool, gureguTypes bool) ([]byte, error) {
+func Generate(gormStruct *GormStruct, pkgName string, jsonAnnotation bool, gormAnnotation bool, gureguTypes bool) ([]byte, error) {
+	structName := fmt.Sprintf("Db%s", fmtFieldName(gormStruct.Name))
 	var dbTypes string
-	dbTypes = generateMysqlTypes(gormStructs, 0, jsonAnnotation, gormAnnotation, gureguTypes)
+	dbTypes = generateMysqlTypes(gormStruct, 0, jsonAnnotation, gormAnnotation, gureguTypes)
 	src := fmt.Sprintf("package %s\ntype %s %s}",
 		pkgName,
 		structName,
@@ -104,7 +105,7 @@ func Generate(gormStructs *GormStruct, tableName string, structName string, pkgN
 	if gormAnnotation == true {
 		tableNameFunc := "// TableName sets the insert table name for this struct type\n" +
 			"func (" + strings.ToLower(string(structName[0])) + " *" + structName + ") TableName() string {\n" +
-			"	return \"" + tableName + "\"" +
+			"	return \"" + gormStruct.Name + "\"" +
 			"}"
 		src = fmt.Sprintf("%s\n%s", src, tableNameFunc)
 	}
