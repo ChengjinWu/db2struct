@@ -16,7 +16,7 @@ Db2Struct is based/inspired by the work of ChimeraCoder's gojson package
 
 ```BASH
 go get github.com/ChengjinWu/db2struct/db2struct
-db2struct --host localhost -d test -t test_table --package myGoPackage --struct testTable -p --user testUser
+db2struct --host localhost -d test --package myGoPackage  -p --user testUser
 ```
 
 ## Example
@@ -25,7 +25,7 @@ MySQL table named users with four columns: id (int), user_name (varchar(255)), n
 
 Example below uses guregu's null package, but without the option it procuded the sql.NullInt64 and so on.
 ```BASH
-db2struct --host localhost -d example.com -t users --package example --struct user -p --user exampleUser --guregu --gorm
+db2struct --host localhost -d example.com --package example -p --user exampleUser --guregu --gorm
 ```
 
 Output:
